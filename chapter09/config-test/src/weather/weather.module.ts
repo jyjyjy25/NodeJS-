@@ -2,6 +2,6 @@ import { Module } from '@nestjs/common';
 import { WeatherController } from './weather.controller';
 
 @Module({
-  controllers: [WeatherController]
+  controllers: [WeatherController],
 })
 export class WeatherModule {}
