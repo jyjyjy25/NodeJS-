@@ -1,3 +1,5 @@
+import { ExecutionContext } from './../../../../chapter09/config-test/node_modules/@nestjs/common/interfaces/features/execution-context.interface.d';
+import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { Injectable, CanActivate } from '@nestjs/common';
 
@@ -36,5 +38,25 @@ export class LoginGuard implements CanActivate {
     // 있으면 request에 user 정보를 추가하고 true 반환
     request.user = user;
     return true;
+  }
+}
+
+@Injectable()
+// AuthGuard 상속
+export class LocalAuthGuard extends AuthGuard('local') {
+  async canActivate(context: any): Promise<boolean> {
+    const result = (await super.canActivate(context)) as boolean;
+    // 로컬 스트레티지 실행
+    const request = context.switchToHttp().getRequest();
+    await super.logIn(request); // 세션 저장
+    return result;
+  }
+}
+
+@Injectable()
+export class AuthenticatedGuard implements CanActivate {
+  canActivate(context: ExecutionContext): boolean {
+    const request = context.switchToHttp().getRequest();
+    return request.isAuthenticated();
   }
 }
