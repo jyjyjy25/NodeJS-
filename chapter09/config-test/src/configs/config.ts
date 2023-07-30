@@ -1,3 +1,6 @@
+import { readFileSync } from 'fs';
+import * as yaml from 'js-yaml';
+
 import common from './common';
 import local from './local';
 import dev from './dev';
@@ -14,8 +17,14 @@ if (phase === 'local') {
   conf = prod;
 }
 
+// YAML 파일 로딩
+const yamlConfig: Record<string, any> = yaml.load(
+  readFileSync(`${process.cwd()}/envs/config.yaml`, 'utf8'),
+);
+
 // common과 conf에서 받은 값을 합쳐서 결괏값으로 주는 함수 반환
 export default () => ({
   ...common,
   ...conf,
+  yamlConfig, // 기존 설정의 마지막에 덧붙임
 });

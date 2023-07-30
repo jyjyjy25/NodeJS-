@@ -23,4 +23,11 @@ export class AppController {
     console.log(this.configService.get('dbInfo'));
     return this.configService.get('dbInfo');
   }
+
+  @Get('redis-info')
+  getRedisInfo(): string {
+    return `${this.configService.get('redis.host')}:${this.configService.get(
+      'redis.port',
+    )}`;
+  }
 }
