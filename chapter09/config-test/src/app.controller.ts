@@ -15,4 +15,12 @@ export class AppController {
   getServiceUrl(): string {
     return this.configService.get('SERVICE_URL');
   }
+
+  @Get('db-info')
+  getTest(): string {
+    console.log(this.configService.get('logLevel'));
+    console.log(this.configService.get('apiVersion'));
+    console.log(this.configService.get('dbInfo'));
+    return this.configService.get('dbInfo');
+  }
 }
