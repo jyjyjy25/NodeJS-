@@ -14,6 +14,7 @@ console.log('current wroking directory: ' + process.cwd()); // 현재 디렉터�
       isGlobal: true,
       envFilePath: `${process.cwd()}/envs/${process.env.NODE_ENV}.env`, // 환경 변수 파일 경로 지정
       load: [config], // 커스텀 설정 파일 설정
+      cache: true, // 캐시하기
     }),
     WeatherModule,
   ], // configModule 설정
